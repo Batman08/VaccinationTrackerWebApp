@@ -27,3 +27,16 @@ BEGIN
 	SELECT VaccinationCentreId, Name FROM VaccinationCentres ORDER BY Name;
 END;
 GO
+
+-- [spGetVaccinationTypes]
+-- This will get a list of vaccination types after login
+-- -------------------------------------------------------
+
+CREATE   PROC [dbo].[spGetVaccinationTypes]
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+	SELECT VaccinationTypeId, Name FROM VaccinationTypes ORDER BY Name;
+END;
+GO
