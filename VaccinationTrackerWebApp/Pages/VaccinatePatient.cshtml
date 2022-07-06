@@ -27,9 +27,10 @@
         <div class="col-md-9">
             <select name="ddlVaccinationCentre" class="form-select" aria-label="select vaccination centre" required>
                 <option value="">-- Select Vaccination Centre --</option>
-                @*                <?php foreach ($vaccinationCentres as $vaccinationCentre) { ?>
-                <option value="<?= $vaccinationCentre['VaccinationCentreId'] ?>"><?= $vaccinationCentre['Name'] ?></option>
-                <?php } ?>*@
+                @foreach (var item in Model.VaccinationCentreData)
+                {
+                    <option value="@item.VaccinationCentreId">@item.Name</option>
+                }
             </select>
         </div>
     </div>

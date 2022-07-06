@@ -6,20 +6,26 @@ namespace VaccinationTrackerWebApp.Data
     public interface IVaccinationTrackerRepository
     {
         public List<LoginData> SpGetMedicalPersons();
+        public List<VaccinationCentreData> SpGetVaccinationCentres();
     }
 
     public class VaccinationTrackerRepository: IVaccinationTrackerRepository
     {
-        private VaccinationTrackerContext _VaccinationTrackerContext;
+        private VaccinationTrackerContext _vaccinationTrackerContext;
         
         public VaccinationTrackerRepository(VaccinationTrackerContext context)
         {
-            _VaccinationTrackerContext = context;
+            _vaccinationTrackerContext = context;
         }
 
         public List<LoginData> SpGetMedicalPersons()
         {
-            return _VaccinationTrackerContext.LoginData.FromSqlRaw("spGetMedicalPersons").ToList();
+            return _vaccinationTrackerContext.LoginData.FromSqlRaw("spGetMedicalPersons").ToList();
+        }
+
+        public List<VaccinationCentreData> SpGetVaccinationCentres()
+        {
+            return _vaccinationTrackerContext.VaccinationCentreData.FromSqlRaw("spGetVaccinationCentres").ToList();
         }
     }
 }
