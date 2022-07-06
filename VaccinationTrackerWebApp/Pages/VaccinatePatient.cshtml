@@ -1,4 +1,5 @@
 ﻿@page
+@using Data.Models
 @model VaccinationTrackerWebApp.Pages.VaccinatePatientModel
 @{
     ViewData["Title"] = "Vaccinate Patient";
@@ -27,7 +28,7 @@
         <div class="col-md-9">
             <select name="ddlVaccinationCentre" class="form-select" aria-label="select vaccination centre" required>
                 <option value="">-- Select Vaccination Centre --</option>
-                @foreach (var item in Model.VaccinationCentreData)
+                @foreach (VaccinationCentreData item in Model.VaccinationCentreData)
                 {
                     <option value="@item.VaccinationCentreId">@item.Name</option>
                 }
@@ -53,9 +54,10 @@
         <div class="col-md-9">
             <select name="ddlVaccinationType" class="form-select" aria-label="select user" required>
                 <option value="">-- Select Vaccination Type --</option>
-                @*                <?php foreach ($vaccinationTypes as $vaccinationType) { ?>
-                <option value="<?= $vaccinationType['VaccinationTypeId'] ?>"><?= $vaccinationType['Name'] ?></option>
-                <?php } ?>*@
+                @foreach (VaccinationTypeData item in Model.VaccinationTypeData)
+                {
+                    <option value="@item.VaccinationTypeId">@item.Name</option>
+                }
             </select>
         </div>
     </div>

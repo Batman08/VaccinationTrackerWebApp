@@ -7,6 +7,7 @@ namespace VaccinationTrackerWebApp.Data
     {
         public List<LoginData> SpGetMedicalPersons();
         public List<VaccinationCentreData> SpGetVaccinationCentres();
+        public List<VaccinationTypeData> SpGetVaccinationTypes();
     }
 
     public class VaccinationTrackerRepository: IVaccinationTrackerRepository
@@ -26,6 +27,11 @@ namespace VaccinationTrackerWebApp.Data
         public List<VaccinationCentreData> SpGetVaccinationCentres()
         {
             return _vaccinationTrackerContext.VaccinationCentreData.FromSqlRaw("spGetVaccinationCentres").ToList();
+        }
+
+        public List<VaccinationTypeData> SpGetVaccinationTypes()
+        {
+            return _vaccinationTrackerContext.VaccinationTypeData.FromSqlRaw("spGetVaccinationTypes").ToList();
         }
     }
 }

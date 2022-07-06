@@ -9,6 +9,8 @@ namespace VaccinationTrackerWebApp.Pages
     {
         [BindProperty]
         public List<VaccinationCentreData> VaccinationCentreData { get; set; }
+        [BindProperty]
+        public List<VaccinationTypeData> VaccinationTypeData { get; set; }
 
         private IVaccinationTrackerRepository _vaccinationTrackerRepo;
 
@@ -20,6 +22,7 @@ namespace VaccinationTrackerWebApp.Pages
         public void OnGet()
         {
             VaccinationCentreData = _vaccinationTrackerRepo.SpGetVaccinationCentres();
+            VaccinationTypeData = _vaccinationTrackerRepo.SpGetVaccinationTypes();
         }
     }
 }
