@@ -14,6 +14,18 @@ BEGIN
 END;
 GO
 
+-- [spGetMedicalPerson]
+-- This will get the selected medical persons after login
+-- ------------------------------------------------------
+CREATE   PROC [dbo].[spGetMedicalPerson] @p_MedicalPersonId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+	SELECT * FROM MedicalPersons mp WHERE mp.MedicalPersonId = @p_MedicalPersonId;
+END;
+GO
+
 
 -- [spGetVaccinationCentres]
 -- This will get a list of vaccination centres after login
