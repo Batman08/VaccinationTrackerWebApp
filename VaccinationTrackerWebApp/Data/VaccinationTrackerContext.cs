@@ -7,6 +7,7 @@ namespace VaccinationTrackerWebApp.Data
     {
         public VaccinationTrackerContext(DbContextOptions options) : base(options) { }
         public DbSet<LoginData> LoginData{ get; set; }
+        public DbSet<MedicalPersonData> MedicalPersonData{ get; set; }
         public DbSet<VaccinationCentreData> VaccinationCentreData { get; set; }
         public DbSet<VaccinationTypeData> VaccinationTypeData { get; set; }
     }
