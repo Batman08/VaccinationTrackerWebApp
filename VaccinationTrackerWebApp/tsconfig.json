@@ -1,0 +1,24 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "ES6",
+    "outDir": "wwwroot/js/",
+    "forceConsistentCasingInFileNames": true,
+    //"skipLibCheck": true,
+    //"watch": true
+    //"composite": true
+  },
+  "exclude": [
+    "node_modules",
+    "wwwroot"
+    //"TypeScript\\Scripts\\Request.ts"
+    //"TypeScript/Scripts/**"
+  ],
+  //"include": [
+  //  "TypeScript/App/Login.ts"
+  //]
+}

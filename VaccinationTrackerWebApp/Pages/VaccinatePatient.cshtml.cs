@@ -27,7 +27,11 @@ namespace VaccinationTrackerWebApp.Pages
         {
             VaccinationCentreData = _vaccinationTrackerRepo.SpGetVaccinationCentres();
             VaccinationTypeData = _vaccinationTrackerRepo.SpGetVaccinationTypes();
-            MedicalPersonData = _vaccinationTrackerRepo.SpGetMedicalPerson(4); //need to pass login id
+        }
+
+        public JsonResult OnPostMedicalPersonId(int MedicalPersonId) {
+            MedicalPersonData = _vaccinationTrackerRepo.SpGetMedicalPerson(MedicalPersonId);
+            return new JsonResult(new { MedicalPersonData });
         }
     }
 }

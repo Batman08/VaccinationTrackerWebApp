@@ -7,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<VaccinationTrackerContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("VaccinationTracker")));
 builder.Services.AddScoped<IVaccinationTrackerRepository, VaccinationTrackerRepository>();
+builder.Services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
+
 
 var app = builder.Build();
 
