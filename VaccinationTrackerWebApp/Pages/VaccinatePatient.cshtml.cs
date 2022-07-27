@@ -7,14 +7,9 @@ namespace VaccinationTrackerWebApp.Pages
 {
     public class VaccinatePatientModel : PageModel
     {
-        [BindProperty]
-        public List<VaccinationCentreData> VaccinationCentreData { get; set; }
-        
-        [BindProperty]
-        public List<VaccinationTypeData> VaccinationTypeData { get; set; }
-
-        [BindProperty]
-        public List<MedicalPersonData> MedicalPersonData { get; set; }
+        [BindProperty] public List<VaccinationCentreData> VaccinationCentreData { get; set; }
+        [BindProperty] public List<VaccinationTypeData> VaccinationTypeData { get; set; }
+        [BindProperty] public MedicalPersonData MedicalPersonData { get; set; }
 
         private IVaccinationTrackerRepository _vaccinationTrackerRepo;
 
@@ -27,11 +22,7 @@ namespace VaccinationTrackerWebApp.Pages
         {
             VaccinationCentreData = _vaccinationTrackerRepo.SpGetVaccinationCentres();
             VaccinationTypeData = _vaccinationTrackerRepo.SpGetVaccinationTypes();
-        }
-
-        public JsonResult OnPostMedicalPersonId(int MedicalPersonId) {
-            MedicalPersonData = _vaccinationTrackerRepo.SpGetMedicalPerson(MedicalPersonId);
-            return new JsonResult(new { MedicalPersonData });
+            MedicalPersonData = _vaccinationTrackerRepo.SpGetMedicalPerson(int.Parse(HttpContext.Session.GetString("Username")));
         }
     }
 }

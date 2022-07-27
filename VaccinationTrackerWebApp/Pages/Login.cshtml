@@ -16,9 +16,9 @@
             <div class="card-body">
                 <form id="formLogin" method='POST'>
                     <div class="form-group">
-                        <label for="username">Username</label>
-                        <select id="txtUsername" name="txtUsername" class="form-select" aria-label="select user">
-                            <option selected value="" disabled="disabled">-- Select Administrator --</option>
+                        <label asp-for="@Model.Username">Username</label>
+                        <select asp-for="@Model.Username" class="form-select" aria-label="select user">
+                            <option selected value="" disabled="disablesd">-- Select Administrator --</option>
                             <option value="DemoAdministrator">Demo Administrator</option>
                             <option disabled="disabled"></option>
                             <option disabled="disabled">-- Select Vaccinator --</option>
@@ -32,8 +32,9 @@
                         <label for="username">Password</label>
                         <input type="password" name="txtPassword" class="form-control" disabled value="*******">
                     </div>
-                    <div class="form-group" style="margin-top: 20px;">
-                        <button type="submit" value="send" class="btn btn-primary btn-block"><i class="fas fa-sign-in-alt"></i> Login</button>
+                    <div class="form-group" style=" margin-top: 20px;">
+                        <button asp-page-handler="ProcessLogin" type="submit" class="btn btn-primary btn-block"><i class="fas fa-sign-in-alt"></i> Login</button>
+                        @*continue from here*@
                     </div>
                 </form>
             </div>
@@ -41,7 +42,7 @@
     </div>
 </div>
 
-@section MyScriptsSection{
+@*@section MyScriptsSection{
     <script src="~/js/Request.js" asp-append-version="true"></script>
     <script src="~/js/Login.js" asp-append-version="true"></script>
-}
+}*@

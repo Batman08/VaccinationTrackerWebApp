@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Http;
 using VaccinationTrackerWebApp.Data;
 using VaccinationTrackerWebApp.Data.Models;
 
@@ -7,8 +8,8 @@ namespace VaccinationTrackerWebApp.Pages
 {
     public class LoginModel : PageModel
     {
-        [BindProperty]
-        public List<LoginData> LoginData { get; set; }
+        [BindProperty] public List<LoginData> LoginData { get; set; }
+        [BindProperty] public string Username { get; set; }
 
         private IVaccinationTrackerRepository _vaccinationTrackerRepo;
 
@@ -22,26 +23,30 @@ namespace VaccinationTrackerWebApp.Pages
             LoginData = _vaccinationTrackerRepo.SpGetMedicalPersons();
         }
 
-        public IActionResult OnPostProcessLogin(LoginFormModel loginFormModel)
+        public IActionResult OnPostProcessLogin()
         {
-            string value = "";
-            if (loginFormModel.Username == "DemoAdministrator")
+            if (!ModelState.IsValid)
             {
-                //return RedirectToPage("Privacy");
-                value = "DemoAdministrator";
-            }
-            else if (loginFormModel.Username != null)
-            {
-                //return RedirectToPage("Index");
-                value = loginFormModel.Username;
+                return Page();
             }
 
-            return new JsonResult(new { value });
+            HttpContext.Session.SetString("Username", Username);
+            
+            if (Username == "DemoAdministrator")
+            {
+                return RedirectToPage("AdminReports");
+            }
+            else if (Username == "")
+            {
+                return Page();
+            }
+            else if (Username != null)
+            {
+                return RedirectToPage("VaccinatePatient");
+            }
+
+            LoginData = _vaccinationTrackerRepo.SpGetMedicalPersons();
+            return Page();
         }
-    }
-
-    public class LoginFormModel
-    {
-        public string Username { get; set; }
     }
 }

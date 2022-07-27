@@ -1,4 +1,5 @@
-﻿@page
+﻿@*@page "{MedicalPersonId:int}"*@
+@page
 @using Data.Models
 @Html.AntiForgeryToken()
 @model VaccinationTrackerWebApp.Pages.VaccinatePatientModel
@@ -8,19 +9,14 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <h3 id="medicalPersonDetails"></h3>
-        <div id="medicalPersonContact" class="text-muted"></div>
-@*        foreach (var item in Model.MedicalPersonData)
-        {
-            <h3 id="medicalPersonDetails"> @item.FirstName @item.LastName @item.Profession</h3>
-            <div id="medicalPersonContact" class="text-muted">@item.Address , @item.Postcode, Tel: @item.Telephone</div>
-        }*@
+        <h3> @Model.MedicalPersonData.FirstName @Model.MedicalPersonData.LastName - @Model.MedicalPersonData.Profession</h3>
+        <div class="text-muted">@Model.MedicalPersonData.Address , @Model.MedicalPersonData.Postcode, Tel: @Model.MedicalPersonData.Telephone</div>
     </div>
 </div>
 
 <div class="row padBottom30">
     <div class="col-sm-12" style="text-align: right;">
-        <a href="/PatientVaccinations/VaccinationHistory.php" class="btn btn-success"><i class="fas fa-book-medical"></i> Vaccination History</a>
+        <a asp-page="VaccinationHistory" class="btn btn-success"><i class="fas fa-book-medical"></i> Vaccination History</a>
     </div>
 </div>
 
@@ -148,7 +144,7 @@
     </div>
 </form>
 
-@section MyScriptsSection{
+@*@section MyScriptsSection{
     <script src="~/js/Request.js" asp-append-version="true"></script>
     <script src="~/js/VaccinatePatient.js" asp-append-version="true"></script>
-}
+}*@
