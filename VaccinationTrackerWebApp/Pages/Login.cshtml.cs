@@ -25,27 +25,23 @@ namespace VaccinationTrackerWebApp.Pages
 
         public IActionResult OnPostProcessLogin()
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || Username == null || Username == "")
             {
+                LoginData = _vaccinationTrackerRepo.SpGetMedicalPersons();
                 return Page();
             }
-
+            
             HttpContext.Session.SetString("Username", Username);
             
             if (Username == "DemoAdministrator")
             {
                 return RedirectToPage("AdminReports");
             }
-            else if (Username == "")
-            {
-                return Page();
-            }
             else if (Username != null)
             {
                 return RedirectToPage("VaccinatePatient");
             }
 
-            LoginData = _vaccinationTrackerRepo.SpGetMedicalPersons();
             return Page();
         }
     }
