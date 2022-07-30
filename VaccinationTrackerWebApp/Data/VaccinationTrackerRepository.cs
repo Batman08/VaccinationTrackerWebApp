@@ -7,10 +7,12 @@ namespace VaccinationTrackerWebApp.Data
     public interface IVaccinationTrackerRepository
     {
         public List<LoginData> SpGetMedicalPersons();
-        public List<MedicalPersonData> SpGetMedicalPerson(int Id);
+        public MedicalPersonData SpGetMedicalPerson(int medicalPersonId);
         public List<VaccinationCentreData> SpGetVaccinationCentres();
         public List<VaccinationTypeData> SpGetVaccinationTypes();
         public List<CentreReportData> spGetReportVaccinationsByCentre();
+        public int spGetTotalMedicalPersonVaccinations(int medicalPersonId);
+        public List<VaccinationHistoryData> spGetVaccinationHistory(int medicalPersonId);
     }
 
     public class VaccinationTrackerRepository: IVaccinationTrackerRepository
@@ -27,10 +29,10 @@ namespace VaccinationTrackerWebApp.Data
             return _vaccinationTrackerContext.LoginData.FromSqlRaw("spGetMedicalPersons").ToList();
         }
 
-        public List<MedicalPersonData> SpGetMedicalPerson(int Id)
+        public MedicalPersonData SpGetMedicalPerson(int medicalPersonId)
         {
-            SqlParameter p_MedicalPersonId = new SqlParameter("@p_MedicalPersonId", Id);
-            return _vaccinationTrackerContext.MedicalPersonData.FromSqlRaw("spGetMedicalPerson @p_MedicalPersonId", p_MedicalPersonId).ToList();
+            SqlParameter p_MedicalPersonId = new SqlParameter("@p_MedicalPersonId", medicalPersonId);
+            return _vaccinationTrackerContext.MedicalPersonData.FromSqlRaw("spGetMedicalPerson @p_MedicalPersonId", p_MedicalPersonId).AsEnumerable().First();
         }
 
         public List<VaccinationCentreData> SpGetVaccinationCentres()
@@ -46,6 +48,18 @@ namespace VaccinationTrackerWebApp.Data
         public List<CentreReportData> spGetReportVaccinationsByCentre()
         {
             return _vaccinationTrackerContext.CentreReportData.FromSqlRaw("spGetReportVaccinationsByCentre").ToList();
+        }
+
+        public int spGetTotalMedicalPersonVaccinations(int medicalPersonId)
+        {
+            SqlParameter p_MedicalPersonId = new SqlParameter("@p_MedicalPersonId", medicalPersonId);
+            return _vaccinationTrackerContext.TotalMedicalPersonVaxData.FromSqlRaw("spGetTotalMedicalPersonVaccinations @p_MedicalPersonId", p_MedicalPersonId).AsEnumerable().First().TotalMedicalPersonVaccinations;
+        }
+
+        public List<VaccinationHistoryData> spGetVaccinationHistory(int medicalPersonId)
+        {
+            SqlParameter p_MedicalPersonId = new SqlParameter("@p_MedicalPersonId", medicalPersonId);
+            return _vaccinationTrackerContext.VaccinationHistoryData.FromSqlRaw("spGetVaccinationHistory @p_MedicalPersonId", p_MedicalPersonId).ToList();
         }
     }
 }

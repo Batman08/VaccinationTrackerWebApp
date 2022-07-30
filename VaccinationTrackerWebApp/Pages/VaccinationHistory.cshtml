@@ -16,7 +16,7 @@
 
 <div class="row padBottom30">
     <div class="col-sm-12" style="text-align: right;">
-        @*<a asp-page="VaccinatePatient" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>*@
+        <a asp-page="VaccinatePatient" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
     </div>
 </div>
 
@@ -37,15 +37,15 @@
         </tr>
     </thead>
     <tbody>
-@*        <?php foreach ($vaccinationHistory as $vh) { ?>
+        @foreach (VaccinationHistoryData item in Model.VaccinationHistoryData) {
         <tr>
-            <td><?= $vh['RowNum'] ?></td>
-            <td><?= $vh['DateTime'] ?></td>
-            <td><?= $vh['VaccinationCentre'] ?></td>
-            <td><?= $vh['PatientName'] ?></td>
-            <td><?= $vh['VaccinationType'] ?></td>
+            <td>@item.RowNum</td>
+            <td>@item.DateTime</td>
+            <td>@item.VaccinationCentre</td>
+            <td>@item.PatientName</td>
+            <td>@item.VaccinationType</td>
         </tr>
-        <?php } ?>*@
+        }
     </tbody>
 </table>
 

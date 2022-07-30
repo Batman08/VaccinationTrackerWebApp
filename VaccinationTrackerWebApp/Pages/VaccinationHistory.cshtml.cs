@@ -23,7 +23,7 @@ namespace VaccinationTrackerWebApp.Pages
             int medicalPersonId = int.Parse(HttpContext.Session.GetString("Username"));
             MedicalPersonData = _vaccinationTrackerRepo.SpGetMedicalPerson(medicalPersonId);
             TotalMedicalPersonVaxData = _vaccinationTrackerRepo.spGetTotalMedicalPersonVaccinations(medicalPersonId);
-            //VaccinationHistoryData = _vaccinationTrackerRepo.spGetVaccinationHistory(MedicalPersonId);
+            VaccinationHistoryData = _vaccinationTrackerRepo.spGetVaccinationHistory(medicalPersonId);
         }
     }
 }
