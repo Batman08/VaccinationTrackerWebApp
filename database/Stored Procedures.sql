@@ -132,3 +132,23 @@ BEGIN
 	SELECT COUNT(*) AS TotalVaccinations FROM PatientVaccinations;
 END;
 GO
+
+
+-- [spGetReportPatientsByVaccinationType]
+-- This will get a list of vaccinations by type
+-- --------------------------------------------
+
+CREATE   PROC [dbo].[spGetReportPatientsByVaccinationType]
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+	declare @TotalPatients int = (SELECT COUNT(*)  FROM Patients);
+
+	SELECT vt.Name, COUNT(pv.VaccinationTypeId) AS NumberOfPatients, COUNT(pv.VaccinationTypeId) * 100 / @TotalPatients AS PercentOfPatients
+	FROM PatientVaccinations pv
+		INNER JOIN VaccinationTypes vt ON pv.VaccinationTypeId = vt.VaccinationTypeId
+	GROUP BY vt.VaccinationTypeId, vt.Name
+	ORDER BY NumberOfPatients DESC;
+END;
+GO
