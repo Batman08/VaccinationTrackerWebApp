@@ -13,12 +13,13 @@ namespace VaccinationTrackerWebApp.Data
         public List<CentreReportData> spGetReportVaccinationsByCentre();
         public int spGetTotalMedicalPersonVaccinations(int medicalPersonId);
         public List<VaccinationHistoryData> spGetVaccinationHistory(int medicalPersonId);
+        public int spGetTotalVaccinations();
     }
 
-    public class VaccinationTrackerRepository: IVaccinationTrackerRepository
+    public class VaccinationTrackerRepository : IVaccinationTrackerRepository
     {
         private VaccinationTrackerContext _vaccinationTrackerContext;
-        
+
         public VaccinationTrackerRepository(VaccinationTrackerContext context)
         {
             _vaccinationTrackerContext = context;
@@ -45,11 +46,6 @@ namespace VaccinationTrackerWebApp.Data
             return _vaccinationTrackerContext.VaccinationTypeData.FromSqlRaw("spGetVaccinationTypes").ToList();
         }
 
-        public List<CentreReportData> spGetReportVaccinationsByCentre()
-        {
-            return _vaccinationTrackerContext.CentreReportData.FromSqlRaw("spGetReportVaccinationsByCentre").ToList();
-        }
-
         public int spGetTotalMedicalPersonVaccinations(int medicalPersonId)
         {
             SqlParameter p_MedicalPersonId = new SqlParameter("@p_MedicalPersonId", medicalPersonId);
@@ -60,6 +56,16 @@ namespace VaccinationTrackerWebApp.Data
         {
             SqlParameter p_MedicalPersonId = new SqlParameter("@p_MedicalPersonId", medicalPersonId);
             return _vaccinationTrackerContext.VaccinationHistoryData.FromSqlRaw("spGetVaccinationHistory @p_MedicalPersonId", p_MedicalPersonId).ToList();
+        }
+
+        public List<CentreReportData> spGetReportVaccinationsByCentre()
+        {
+            return _vaccinationTrackerContext.CentreReportData.FromSqlRaw("spGetReportVaccinationsByCentre").ToList();
+        }
+
+        public int spGetTotalVaccinations()
+        {
+            return _vaccinationTrackerContext.TotalVaccinationData.FromSqlRaw("spGetTotalVaccinations").AsEnumerable().First().TotalVaccinations;
         }
     }
 }

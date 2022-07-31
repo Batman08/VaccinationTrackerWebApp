@@ -3,3 +3,70 @@
 @{
     ViewData["Title"] = "Adinistrator Reports";
 }
+
+<div class="row padBottom30">
+    <div class="col-sm">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">1. Covid Vaccinations by Area</h5>
+                <p class="card-text">Displays the total number of covid vaccinations carried out by area.</p>
+                <a href="?ReportType=1" class="btn btn-primary"><i class="fas fa-play"></i> Run Report</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">2. Vaccination Type Report</h5>
+                <p class="card-text">A report on the number of patients for each type of vaccination.</p>
+                <a href="?ReportType=2" class="btn btn-primary"><i class="fas fa-play"></i> Run Report</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">3. Vaccinations by Centre</h5>
+                <p class="card-text">Displays the number of vaccinations carried out by each centre.</p>
+                <a href="?ReportType=3" class="btn btn-primary"><i class="fas fa-play"></i> Run Report</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Request.Query["ReportType"] == "3")
+{
+    <div class="alert alert-primary" role="alert" style="font-weight: bold;">
+        <h5>3. Vaccinations by Centre</h5>
+        Total Number of Vaccinations: @Model.TotalVaccinationData
+    </div>
+
+    <table class="table table-striped table-hover">
+        <colgroup></colgroup>
+        <thead>
+            <tr>
+                <th scope="col">Vaccination Centre</th>
+                <th scope="col">Number of Vaccinations</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var reportData in Model.CentreReportData)
+            {
+                <tr>
+                    <td>
+                        <span style="font-size: larger;"><b><i class="fas fa-clinic-medical fa-fw"></i> @reportData.Name</b></span>
+                        <br />
+                        <span class="text-muted"><i class="fas fa-map-marker-alt fa-fw"></i> @reportData.Address</span>
+                        <br />
+                        <span class="text-muted"><i class="fas fa-map-pin fa-fw"></i> @reportData.Postcode</span>
+                        <br />
+                        <span class="text-muted"><i class="fas fa-phone-alt fa-fw"></i> @reportData.Telephone</span>
+                    </td>
+                    <td>
+                        <span style="font-size: larger;"><b>@reportData.NumberOfVaccinations</b></span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

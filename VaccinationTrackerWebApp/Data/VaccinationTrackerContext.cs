@@ -10,13 +10,16 @@ namespace VaccinationTrackerWebApp.Data
         {
             modelBuilder.Entity<TotalMedicalPersonVaxData>().HasNoKey();
             modelBuilder.Entity<VaccinationHistoryData>().HasNoKey();
+            modelBuilder.Entity<TotalVaccinationData>().HasNoKey();
+            modelBuilder.Entity<CentreReportData>().HasNoKey();
         }
         public DbSet<LoginData> LoginData { get; set; }
         public DbSet<MedicalPersonData> MedicalPersonData { get; set; }
         public DbSet<VaccinationCentreData> VaccinationCentreData { get; set; }
         public DbSet<VaccinationTypeData> VaccinationTypeData { get; set; }
-        public DbSet<CentreReportData> CentreReportData { get; set; }
         public DbSet<TotalMedicalPersonVaxData> TotalMedicalPersonVaxData { get; set; }
         public DbSet<VaccinationHistoryData> VaccinationHistoryData { get; set; }
+        public DbSet<TotalVaccinationData> TotalVaccinationData { get; set; }
+        public DbSet<CentreReportData> CentreReportData { get; set; }
     }
 }
