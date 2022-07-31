@@ -152,3 +152,17 @@ BEGIN
 	ORDER BY NumberOfPatients DESC;
 END;
 GO
+
+
+-- [spGetTotalPatients]
+-- This will get total number of patients
+-- --------------------------------------
+
+CREATE   PROC [dbo].[spGetTotalPatients]
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+	SELECT COUNT(*) AS TotalPatients FROM Patients;
+END;
+GO
