@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using VaccinationTrackerWebApp.Data.Models;
+using VaccinationTrackerWebApp.Data.Models.AdminReports.ReportOne;
 using VaccinationTrackerWebApp.Data.Models.AdminReports.ReportThree;
 using VaccinationTrackerWebApp.Data.Models.AdminReports.ReportTwo;
 
@@ -14,10 +15,12 @@ namespace VaccinationTrackerWebApp.Data
         public List<VaccinationTypeData> SpGetVaccinationTypes();
         public int spGetTotalMedicalPersonVaccinations(int medicalPersonId);
         public List<VaccinationHistoryData> spGetVaccinationHistory(int medicalPersonId);
-        public List<ReportThreeData> spGetReportVaccinationsByCentre();
-        public int spGetTotalVaccinations();
+        public List<ReportOneData> spGetReportCovidVaccinationsByArea();
+        public int spGetTotalCovidVaccinations();
         public List<ReportTwoData> spGetReportPatientsByVaccinationType();
         public int spGetTotalPatients();
+        public List<ReportThreeData> spGetReportVaccinationsByCentre();
+        public int spGetTotalVaccinations();
     }
 
     public class VaccinationTrackerRepository : IVaccinationTrackerRepository
@@ -62,14 +65,14 @@ namespace VaccinationTrackerWebApp.Data
             return _vaccinationTrackerContext.VaccinationHistoryData.FromSqlRaw("spGetVaccinationHistory @p_MedicalPersonId", p_MedicalPersonId).ToList();
         }
 
-        public List<ReportThreeData> spGetReportVaccinationsByCentre()
+        public List<ReportOneData> spGetReportCovidVaccinationsByArea()
         {
-            return _vaccinationTrackerContext.ReportThreeData.FromSqlRaw("spGetReportVaccinationsByCentre").ToList();
+            return _vaccinationTrackerContext.ReportOneData.FromSqlRaw("spGetReportCovidVaccinationsByArea").AsEnumerable().ToList();
         }
 
-        public int spGetTotalVaccinations()
+        public int spGetTotalCovidVaccinations()
         {
-            return _vaccinationTrackerContext.TotalVaccinationData.FromSqlRaw("spGetTotalVaccinations").AsEnumerable().First().TotalVaccinations;
+            return _vaccinationTrackerContext.TotalCovidVaccinationData.FromSqlRaw("spGetTotalCovidVaccinations").AsEnumerable().First().TotalCovidVaccinations;
         }
 
         public List<ReportTwoData> spGetReportPatientsByVaccinationType()
@@ -80,6 +83,15 @@ namespace VaccinationTrackerWebApp.Data
         public int spGetTotalPatients()
         {
             return _vaccinationTrackerContext.TotalPatientData.FromSqlRaw("spGetTotalPatients").AsEnumerable().First().TotalPatients;
+        }
+        public List<ReportThreeData> spGetReportVaccinationsByCentre()
+        {
+            return _vaccinationTrackerContext.ReportThreeData.FromSqlRaw("spGetReportVaccinationsByCentre").ToList();
+        }
+
+        public int spGetTotalVaccinations()
+        {
+            return _vaccinationTrackerContext.TotalVaccinationData.FromSqlRaw("spGetTotalVaccinations").AsEnumerable().First().TotalVaccinations;
         }
     }
 }

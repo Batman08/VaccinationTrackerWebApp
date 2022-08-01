@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VaccinationTrackerWebApp.Data.Models;
+using VaccinationTrackerWebApp.Data.Models.AdminReports.ReportOne;
 using VaccinationTrackerWebApp.Data.Models.AdminReports.ReportThree;
 using VaccinationTrackerWebApp.Data.Models.AdminReports.ReportTwo;
 
@@ -12,10 +13,12 @@ namespace VaccinationTrackerWebApp.Data
         {
             modelBuilder.Entity<TotalMedicalPersonVaxData>().HasNoKey();
             modelBuilder.Entity<VaccinationHistoryData>().HasNoKey();
-            modelBuilder.Entity<TotalVaccinationData>().HasNoKey();
-            modelBuilder.Entity<ReportThreeData>().HasNoKey();
-            modelBuilder.Entity<TotalPatientData>().HasNoKey();
+            modelBuilder.Entity<ReportOneData>().HasNoKey();
+            modelBuilder.Entity<TotalCovidVaccinationData>().HasNoKey();
             modelBuilder.Entity<ReportTwoData>().HasNoKey();
+            modelBuilder.Entity<TotalPatientData>().HasNoKey();
+            modelBuilder.Entity<ReportThreeData>().HasNoKey();
+            modelBuilder.Entity<TotalVaccinationData>().HasNoKey();
         }
         public DbSet<LoginData> LoginData { get; set; }
         public DbSet<MedicalPersonData> MedicalPersonData { get; set; }
@@ -23,9 +26,12 @@ namespace VaccinationTrackerWebApp.Data
         public DbSet<VaccinationTypeData> VaccinationTypeData { get; set; }
         public DbSet<TotalMedicalPersonVaxData> TotalMedicalPersonVaxData { get; set; }
         public DbSet<VaccinationHistoryData> VaccinationHistoryData { get; set; }
-        public DbSet<TotalVaccinationData> TotalVaccinationData { get; set; }
-        public DbSet<ReportThreeData> ReportThreeData { get; set; }
-        public DbSet<TotalPatientData> TotalPatientData { get; set; }
+        public DbSet<ReportOneData> ReportOneData { get; set; }
         public DbSet<ReportTwoData> ReportTwoData { get; set; }
+        public DbSet<TotalPatientData> TotalPatientData { get; set; }
+        public DbSet<ReportThreeData> ReportThreeData { get; set; }
+        public DbSet<TotalVaccinationData> TotalVaccinationData { get; set; }
+        public DbSet<TotalCovidVaccinationData> TotalCovidVaccinationData { get; set; }
+
     }
 }

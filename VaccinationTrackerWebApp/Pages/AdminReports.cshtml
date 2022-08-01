@@ -4,6 +4,9 @@
     ViewData["Title"] = "Adinistrator Reports";
 }
 
+
+<h1 style="margin-bottom: 40px;">Administrator Reports</h1>
+
 <div class="row padBottom30">
     <div class="col-sm">
         <div class="card">
@@ -34,6 +37,108 @@
     </div>
 </div>
 
+
+@if (Request.Query["ReportType"] == "1")
+{
+    <div class="alert alert-primary" role="alert" style="font-weight: bold;">
+        <h5>1. Vaccinations by Centre</h5>
+        Total Number of Covid Vaccinations: @Model.TotalCovidVaccinations
+    </div>
+
+    <table class="table table-striped table-hover">
+        <colgroup>
+            <col style="width: 30%;" />
+            <col style="width: 20%;" />
+            <col style="width: 50%;" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th scope="col">Area</th>
+                <th scope="col">Total Administered</th>
+                <th scope="col">Vaccine Breakdown</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var previous = "";
+                var currentArea = "";
+                var totalItems = Model.ReportOneData.Count()-1; /*need to fix*/
+            }
+            
+            @for (var i = 0; i < totalItems; i++)
+            {
+                var item = Model.ReportOneData[i];
+                currentArea = item.Area;
+
+                @if (currentArea != previous)
+                {
+                    <tr>
+                        @{
+                            previous = currentArea;
+                        }
+
+                        <td>
+                            <span style="font-size: larger;">@item.Area</span>
+                        </td>
+                        <td>
+                            <span style="font-size: larger;">@item.TotalVax</span>
+                        </td>
+                        <td>
+                            @{
+                                var j = i;
+                            }
+                            
+                                @while (currentArea == Model.ReportOneData[j].Area)
+                                {
+                                    <span style="font-size: larger;">@Model.ReportOneData[j].Vaccine: @Model.ReportOneData[j].NumVaxByArea</span>
+                                    j++;
+                                    <br />
+                                }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
+
+
+@if (Request.Query["ReportType"] == "2")
+{
+    <div class="alert alert-primary" role="alert" style="font-weight: bold;">
+        <h5>2. Vaccinations by Centre</h5>
+        Total Number of Patients: @Model.TotalPatients
+    </div>
+
+    <table class="table table-striped table-hover">
+        <colgroup></colgroup>
+        <thead>
+            <tr>
+                <th scope="col">Vaccination Type</th>
+                <th scope="col">Number of Patients</th>
+                <th scope="col">% of Total Patients</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var reportData in Model.ReportTwoData)
+            {
+                <tr>
+                    <td>
+                        <span style="font-size: larger;">@reportData.Name</span>
+                    </td>
+                    <td>
+                        <span style="font-size: larger;">@reportData.NumberOfPatients</span>
+                    </td>
+                    <td>
+                        <span style="font-size: larger;">@reportData.PercentOfPatients %</span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
 @if (Request.Query["ReportType"] == "3")
 {
     <div class="alert alert-primary" role="alert" style="font-weight: bold;">
@@ -50,7 +155,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var reportData in Model.CentreReportData)
+            @foreach (var reportData in Model.ReportThreeData)
             {
                 <tr>
                     <td>

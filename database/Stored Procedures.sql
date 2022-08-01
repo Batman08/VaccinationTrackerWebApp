@@ -166,3 +166,57 @@ BEGIN
 	SELECT COUNT(*) AS TotalPatients FROM Patients;
 END;
 GO
+
+
+-- [spGetReportCovidVaccinationsByArea]
+-- This will get the total number of covid vaccinations then will brake down the 4 different types of covid vaccines and number of those given
+-- -------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE   PROC [dbo].[spGetReportCovidVaccinationsByArea]
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+	SELECT SUBSTRING(p.Address, LEN(p.Address) - CHARINDEX(' ,',REVERSE(p.Address))+1, LEN(p.Address)) AS Area,  vt.name AS Vaccine, COUNT(*) AS NumVaxByArea, 0 AS TotalVax
+	INTO #Temp_AreaVaxDetails 
+	FROM Patients p
+		INNER JOIN PatientVaccinations pv ON p.PatientId = pv.PatientId
+		INNER JOIN vaccinationtypes vt ON pv.VaccinationTypeId = vt.VaccinationTypeId
+	WHERE vt.name LIKE 'COVID-19%'
+	GROUP BY SUBSTRING(p.Address, LEN(p.Address) - CHARINDEX(' ,',REVERSE(p.Address))+1, LEN(p.Address)), vt.VaccinationTypeId, vt.Name;
+
+	SELECT Area, SUM(NumVaxByArea) AS Qty 
+	INTO #Temp_AreaVaxQty
+	FROM #Temp_AreaVaxDetails 
+	GROUP BY Area;
+
+	CREATE NONCLUSTERED	INDEX area_index ON #Temp_AreaVaxQty (Area, Qty);
+
+	UPDATE t1
+	SET t1.TotalVax = t2.Qty
+	FROM #Temp_AreaVaxDetails t1
+		INNER JOIN #Temp_AreaVaxQty t2 ON t1.Area = t2.Area
+
+	SELECT * FROM #Temp_AreaVaxDetails ORDER BY TotalVax DESC, Area, NumVaxByArea DESC, Vaccine;
+
+	DROP TABLE #Temp_AreaVaxDetails;
+	DROP TABLE #Temp_AreaVaxQty;
+END;
+GO
+
+
+-- [spGetTotalCovidVaccinations]
+-- This will get total number of covid vaccinations
+-- ------------------------------------------------
+
+CREATE   PROC [dbo].[spGetTotalCovidVaccinations]
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+	SELECT COUNT(*) AS TotalCovidVaccinations
+	FROM PatientVaccinations pv
+		INNER JOIN VaccinationTypes vt on pv.VaccinationTypeId = vt.VaccinationTypeId
+	WHERE vt.name LIKE 'COVID-19%';
+END;
+GO

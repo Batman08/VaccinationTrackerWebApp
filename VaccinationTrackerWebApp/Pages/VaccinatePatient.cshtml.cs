@@ -24,5 +24,9 @@ namespace VaccinationTrackerWebApp.Pages
             VaccinationTypeData = _vaccinationTrackerRepo.SpGetVaccinationTypes();
             MedicalPersonData = _vaccinationTrackerRepo.SpGetMedicalPerson(int.Parse(HttpContext.Session.GetString("Username")));
         }
+        public void OnPostSavePatient()
+        {
+            
+        }
     }
 }
